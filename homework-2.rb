@@ -4,20 +4,15 @@
 
 require 'google_drive'
 
-def initDrive()
-  session = GoogleDrive::Session.from_config("homework-2_config.json")
-  wsAll = session.spreadsheet_by_key("13zeA2CQagu4xLwTuFrBoQSozv5jOY16xifq2EDHNf3s").worksheets[0]
-  wsTemp = session.spreadsheet_by_key("1Gp3oEDkaPyrOdNuKmmjD7Zcsnw_E5lO7D-lGC5NgyF4").worksheets[0]
-end
 def checkForWin(xy)
   session = GoogleDrive::Session.from_config("homework-2_config.json")
-  wsTemp = session.spreadsheet_by_key("1Gp3oEDkaPyrOdNuKmmjD7Zcsnw_E5lO7D-lGC5NgyF4").worksheets[0]
-  row1 = [wsTemp[2,1],wsTemp[2,2],wsTemp[2,3]]
-  row2 = [wsTemp[3,1],wsTemp[3,2],wsTemp[3,3]]
-  row3 = [wsTemp[4,1],wsTemp[4,2],wsTemp[4,3]]
-  column1 = [wsTemp[2,1],wsTemp[3,1],wsTemp[4,1]]
-  column2 = [wsTemp[2,2],wsTemp[3,2],wsTemp[4,2]]
-  column3 = [wsTemp[2,3],wsTemp[3,3],wsTemp[4,3]]
+  ws = session.spreadsheet_by_key("1Gp3oEDkaPyrOdNuKmmjD7Zcsnw_E5lO7D-lGC5NgyF4").worksheets[0]
+  row1 = [ws[2,1],ws[2,2],ws[2,3]]
+  row2 = [ws[3,1],ws[3,2],ws[3,3]]
+  row3 = [ws[4,1],ws[4,2],ws[4,3]]
+  column1 = [ws[2,1],ws[3,1],ws[4,1]]
+  column2 = [ws[2,2],ws[3,2],ws[4,2]]
+  column3 = [ws[2,3],ws[3,3],ws[4,3]]
   if xy == "x"
     found = false
     if row1[0] == "X"
@@ -139,33 +134,62 @@ def checkForWin(xy)
     found
   end
 end
-def formatNum(x)
-  if x == 1
-    [2,1]
+def formatNum1(x)
+  if x == 1.0
+    2
   end
-  if x == 2
-    [2,2]
+  if x == 2.0
+    2
   end
   if x == 3
-    [2,3]
+    2
   end
-  if x == 4
-    [3,1]
+  if x == 4.0
+    3
   end
-  if x == 5
-    [3,2]
+  if x == 5.0
+    3
   end
-  if x == 6
-    [3,3]
+  if x == 6.0
+    3
   end
-  if x == 7
-    [4,1]
+  if x == 7.0
+    4
   end
-  if x == 8
-    [4,2]
+  if x == 8.0
+    4
   end
-  if x == 9
-    [4,3]
+  if x == 9.0
+    4
+  end
+end
+def formatNum2(y)
+  if y == 1.0
+    1
+  end
+  if y == 2.0
+    2
+  end
+  if y == 3
+    3
+  end
+  if y == 4.0
+    1
+  end
+  if y == 5.0
+    2
+  end
+  if y == 6.0
+    3
+  end
+  if y == 7.0
+    1
+  end
+  if y == 8.0
+    2
+  end
+  if y == 9.0
+    3
   end
 end
 def tutorial()
@@ -193,30 +217,30 @@ def tutorial()
   puts "9 would be the bottom-right corner."
   puts "The game will notify you when one player wins."
   puts "You can keep track of the game on this google spreadsheet:"
-  puts "https://docs.google.com/a/ps10.org/spreadsheets/d/1Gp3oEDkaPyrOdNuKmmjD7Zcsnw_E5lO7D-lGC5NgyF4/edit?usp=sharing"
+  puts "https://docs.google.com/spreadsheets/d/13zeA2CQagu4xLwTuFrBoQSozv5jOY16xifq2EDHNf3s/edit?usp=sharing"
 end
 def startGame()
-  turnNum = 1
+  $turnNum = 1
   def checkForWin2()
     if checkForWin("x") == true
       puts "Player 1 wins!"
       initDrive()
-      wsTemp[2,8] = wsTemp[2,6]
-      wsTemp.save
+      ws[2,8] = ws[2,6]
+      ws.save
     elsif checkForWin("y") == true
       puts "Player 2 wins!"
       initDrive()
-      wsTemp[2,8] = wsTemp[2,7]
-      wsTemp.save
+      ws[2,8] = ws[2,7]
+      ws.save
     else
-      turn(turnNum)
+      turn($turnNum)
     end
   end
   def turn(n)
     puts "Player #{n}'s turn!"
     input = gets.chomp
     if input =~ /\A[-+]?[0-9]*\.?[0-9]+\Z/
-      input = input.to_f
+      input = input.to_i
       if input <= 9
         if input >= 1
           input
@@ -233,17 +257,20 @@ def startGame()
       turn(n)
     end
     session = GoogleDrive::Session.from_config("homework-2_config.json")
-    wsAll = session.spreadsheet_by_key("13zeA2CQagu4xLwTuFrBoQSozv5jOY16xifq2EDHNf3s").worksheets[0]
-    wsTemp = session.spreadsheet_by_key("1Gp3oEDkaPyrOdNuKmmjD7Zcsnw_E5lO7D-lGC5NgyF4").worksheets[0]
-    wsTemp[formatNum(input)] = "X"
-    if turnNum == 1
-      turnNum = 2
-    elsif turnNum == 2
-      turnNum = 1
+    ws = session.spreadsheet_by_key("13zeA2CQagu4xLwTuFrBoQSozv5jOY16xifq2EDHNf3s").worksheets[0]
+    # ws[formatNum1(input),formatNum2(input)] = "X"
+    puts input.class
+    puts input
+    puts formatNum1(input.to_i) # 2
+    puts formatNum2(input.to_i) # 3
+    if $turnNum == 1
+      $turnNum = 2
+    elsif $turnNum == 2
+      $turnNum = 1
     end
     checkForWin2()
   end
-  turn(turnNum)
+  turn($turnNum)
 end
 def init()
   puts "You are about to play Tic-Tac-Toe, command-line version!"
@@ -254,13 +281,12 @@ def init()
     if input == "begin"
       puts "Input Player 1's username:"
       session = GoogleDrive::Session.from_config("homework-2_config.json")
-      wsAll = session.spreadsheet_by_key("13zeA2CQagu4xLwTuFrBoQSozv5jOY16xifq2EDHNf3s").worksheets[0]
-      wsTemp = session.spreadsheet_by_key("1Gp3oEDkaPyrOdNuKmmjD7Zcsnw_E5lO7D-lGC5NgyF4").worksheets[0]
-      wsTemp[2,6] = gets.chomp
-      wsTemp.save
+      ws = session.spreadsheet_by_key("13zeA2CQagu4xLwTuFrBoQSozv5jOY16xifq2EDHNf3s").worksheets[0]
+      ws[2,6] = gets.chomp
+      ws.save
       puts "Input Player 2's username:"
-      wsTemp[2,7] = gets.chomp
-      wsTemp.save
+      ws[2,7] = gets.chomp
+      ws.save
       puts "Starting game!"
       puts ""
       startGame()
