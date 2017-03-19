@@ -135,61 +135,67 @@ def checkForWin(xy)
   end
 end
 def formatNum1(x)
-  if x == 1.0
-    2
+  a = 2
+  b = 3
+  c = 4
+  if x == "1"
+    return a
   end
-  if x == 2.0
-    2
+  if x == "2"
+    return a
   end
-  if x == 3
-    2
+  if x == "3"
+    return a
   end
-  if x == 4.0
-    3
+  if x == "4"
+    return b
   end
-  if x == 5.0
-    3
+  if x == "5"
+    return b
   end
-  if x == 6.0
-    3
+  if x == "6"
+    return b
   end
-  if x == 7.0
-    4
+  if x == "7"
+    return c
   end
-  if x == 8.0
-    4
+  if x == "8"
+    return c
   end
-  if x == 9.0
-    4
+  if x == "9"
+    return c
   end
 end
 def formatNum2(y)
-  if y == 1.0
-    1
+  a = 1
+  b = 2
+  c = 3
+  if y == "1"
+    return a
   end
-  if y == 2.0
-    2
+  if y == "2"
+    return b
   end
-  if y == 3
-    3
+  if y == "3"
+    return c
   end
-  if y == 4.0
-    1
+  if y == "4"
+    return a
   end
-  if y == 5.0
-    2
+  if y == "5"
+    return b
   end
-  if y == 6.0
-    3
+  if y == "6"
+    return c
   end
-  if y == 7.0
-    1
+  if y == "7"
+    return a
   end
-  if y == 8.0
-    2
+  if y == "8"
+    return b
   end
-  if y == 9.0
-    3
+  if y == "9"
+    return c
   end
 end
 def tutorial()
@@ -222,6 +228,7 @@ end
 def startGame()
   $turnNum = 1
   def checkForWin2()
+    puts "Checked for win"
     if checkForWin("x") == true
       puts "Player 1 wins!"
       initDrive()
@@ -240,29 +247,31 @@ def startGame()
     puts "Player #{n}'s turn!"
     input = gets.chomp
     if input =~ /\A[-+]?[0-9]*\.?[0-9]+\Z/
-      input = input.to_i
-      if input <= 9
-        if input >= 1
+      # input = input.to_i
+      # if input <= 9
+        # if input >= 1
           input
-        else
-          puts "Input a number from 1-9, please."
-          turn(n)
-        end
-      else
-        puts "Input a number from 1-9, please."
-        turn(n)
-      end
+        # else
+          # puts "Input a number from 1-9, please."
+          # turn(n)
+        # end
+      # else
+        # puts "Input a number from 1-9, please."
+        # turn(n)
+      # end
     else
       puts "Input a number, please."
       turn(n)
     end
     session = GoogleDrive::Session.from_config("homework-2_config.json")
     ws = session.spreadsheet_by_key("13zeA2CQagu4xLwTuFrBoQSozv5jOY16xifq2EDHNf3s").worksheets[0]
-    # ws[formatNum1(input),formatNum2(input)] = "X"
-    puts input.class
-    puts input
-    puts formatNum1(input.to_i) # 2
-    puts formatNum2(input.to_i) # 3
+    if $turnNum == 1
+      ws[formatNum1(input),formatNum2(input)] = "X"
+      ws.save
+    elsif $turnNum == 2
+      ws[formatNum1(input),formatNum2(input)] = "Y"
+      ws.save
+    end
     if $turnNum == 1
       $turnNum = 2
     elsif $turnNum == 2
