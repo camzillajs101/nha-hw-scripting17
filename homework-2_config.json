@@ -1,1 +1,9 @@
-{"installed":{"client_id":"99530725463-g23i914pr5n5vdht7fhb65bofkdpih6c.apps.googleusercontent.com","project_id":"first-project-b6683","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://accounts.google.com/o/oauth2/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"7cOaxr-JuRe2kpO8odqqoQJe","redirect_uris":["urn:ietf:wg:oauth:2.0:oob","http://localhost"]}}
+{
+  "client_id": "452925651630-egr1f18o96acjjvphpbbd1qlsevkho1d.apps.googleusercontent.com",
+  "client_secret": "1U3-Krii5x1oLPrwD5zgn-ry",
+  "scope": [
+    "https://www.googleapis.com/auth/drive",
+    "https://spreadsheets.google.com/feeds/"
+  ],
+  "refresh_token": "1/0yIHq_h-Ibjp4qnCz5dTn4WBUoJBbBajWHcBF4n6LnI"
+}
