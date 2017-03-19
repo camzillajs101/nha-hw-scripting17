@@ -32,7 +32,7 @@ def init()
     input = gets.chomp
     if input == "begin"
       puts "Ready!"
-    else if input == tutorial
+    elsif input == tutorial
       tutorial()
       init()
     else
