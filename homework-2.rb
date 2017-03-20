@@ -4,9 +4,10 @@
 
 require 'google_drive'
 
+$winner = nil
 def checkForWin(xy)
   session = GoogleDrive::Session.from_config("homework-2_config.json")
-  ws = session.spreadsheet_by_key("1Gp3oEDkaPyrOdNuKmmjD7Zcsnw_E5lO7D-lGC5NgyF4").worksheets[0]
+  ws = session.spreadsheet_by_key("13zeA2CQagu4xLwTuFrBoQSozv5jOY16xifq2EDHNf3s").worksheets[0]
   row1 = [ws[2,1],ws[2,2],ws[2,3]]
   row2 = [ws[3,1],ws[3,2],ws[3,3]]
   row3 = [ws[4,1],ws[4,2],ws[4,3]]
@@ -14,127 +15,141 @@ def checkForWin(xy)
   column2 = [ws[2,2],ws[3,2],ws[4,2]]
   column3 = [ws[2,3],ws[3,3],ws[4,3]]
   if xy == "x"
-    found = false
+    $found = false
     if row1[0] == "X"
       if row1[1] == "X"
         if row1[2] == "X"
-          found = true
+          $found = true
         end
       end
     end
     if row2[0] == "X"
       if row2[1] == "X"
         if row2[2] == "X"
-          found = true
+          $found = true
         end
       end
     end
     if row3[0] == "X"
       if row3[1] == "X"
         if row3[2] == "X"
-          found = true
+          $found = true
         end
       end
     end
     if column1[0] == "X"
       if column1[1] == "X"
         if column1[2] == "X"
-          found = true
+          $found = true
         end
       end
     end
     if column2[0] == "X"
       if column2[1] == "X"
         if column2[2] == "X"
-          found = true
+          $found = true
         end
       end
     end
     if column3[0] == "X"
       if column3[1] == "X"
         if column3[2] == "X"
-          found = true
+          $found = true
         end
       end
     end
     if row1[0] == "X"
       if row2[1] == "X"
         if row3[2] == "X"
-          found = true
+          $found = true
         end
       end
     end
     if row1[2] == "X"
       if row2[1] == "X"
         if row3[0] == "X"
-          found = true
+          $found = true
         end
       end
     end
-    found
+    return $found
   end
   if xy == "y"
-    found = false
+    $found = false
     if row1[0] == "Y"
       if row1[1] == "Y"
         if row1[2] == "Y"
-          found = true
+          $found = true
         end
       end
     end
     if row2[0] == "Y"
       if row2[1] == "Y"
         if row2[2] == "Y"
-          found = true
+          $found = true
         end
       end
     end
     if row3[0] == "Y"
       if row3[1] == "Y"
         if row3[2] == "Y"
-          found = true
+          $found = true
         end
       end
     end
     if column1[0] == "Y"
       if column1[1] == "Y"
         if column1[2] == "Y"
-          found = true
+          $found = true
         end
       end
     end
     if column2[0] == "Y"
       if column2[1] == "Y"
         if column2[2] == "Y"
-          found = true
+          $found = true
         end
       end
     end
     if column3[0] == "Y"
       if column3[1] == "Y"
         if column3[2] == "Y"
-          found = true
+          $found = true
         end
       end
     end
     if row1[0] == "Y"
       if row2[1] == "Y"
         if row3[2] == "Y"
-          found = true
+          $found = true
         end
       end
     end
     if row1[2] == "Y"
       if row2[1] == "Y"
         if row3[0] == "Y"
-          found = true
+          $found = true
         end
       end
     end
-    found
+    return $found
+  end
+end
+def checkForWin2()
+  if checkForWin("x") == true
+    puts "\nPlayer 1 wins!"
+    $winner = 1
+    endGame()
+  elsif checkForWin("y") == true
+    puts "\nPlayer 2 wins!"
+    $winner = 2
+    endGame()
+  else
+    turn($turnNum)
   end
 end
 def formatNum1(x)
+  x = x.to_s
   a = 2
   b = 3
   c = 4
@@ -167,6 +182,7 @@ def formatNum1(x)
   end
 end
 def formatNum2(y)
+  y = y.to_s
   a = 1
   b = 2
   c = 3
@@ -227,38 +243,22 @@ def tutorial()
 end
 def startGame()
   $turnNum = 1
-  def checkForWin2()
-    puts "Checked for win"
-    if checkForWin("x") == true
-      puts "Player 1 wins!"
-      initDrive()
-      ws[2,8] = ws[2,6]
-      ws.save
-    elsif checkForWin("y") == true
-      puts "Player 2 wins!"
-      initDrive()
-      ws[2,8] = ws[2,7]
-      ws.save
-    else
-      turn($turnNum)
-    end
-  end
   def turn(n)
     puts "Player #{n}'s turn!"
     input = gets.chomp
     if input =~ /\A[-+]?[0-9]*\.?[0-9]+\Z/
-      # input = input.to_i
-      # if input <= 9
-        # if input >= 1
+      input = input.to_i
+      if input <= 9
+        if input >= 1
           input
-        # else
-          # puts "Input a number from 1-9, please."
-          # turn(n)
-        # end
-      # else
-        # puts "Input a number from 1-9, please."
-        # turn(n)
-      # end
+        else
+          puts "Input a number from 1-9, please."
+          turn(n)
+        end
+      else
+        puts "Input a number from 1-9, please."
+        turn(n)
+      end
     else
       puts "Input a number, please."
       turn(n)
@@ -310,6 +310,20 @@ def init()
   ask()
 end
 def endGame()
-
+  session = GoogleDrive::Session.from_config("homework-2_config.json")
+  ws = session.spreadsheet_by_key("13zeA2CQagu4xLwTuFrBoQSozv5jOY16xifq2EDHNf3s").worksheets[0]
+  if $winner == 1
+    ws[2,8] = ws[2,6]
+    ws.save
+  elsif $winner == 2
+    ws[2,8] = ws[2,7]
+    ws.save
+  end
+  time = Time.new
+  timeHRS = "#{time.hour}:#{time.min}"
+  timeDATE = "#{time.strftime("%A")}, #{time.strftime("%B")} #{time.strftime("%d")}, #{time.strftime("%Y")}"
+  ws[2,4] = timeDATE
+  ws[2,5] = timeHRS
+  ws.save
 end
 init()
