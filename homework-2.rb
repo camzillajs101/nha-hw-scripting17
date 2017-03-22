@@ -283,6 +283,8 @@ def startGame()
 end
 def init()
   puts "You are about to play Tic-Tac-Toe, command-line version!"
+  puts "Keep track of the game here:"
+  puts "https://docs.google.com/spreadsheets/d/13zeA2CQagu4xLwTuFrBoQSozv5jOY16xifq2EDHNf3s/edit?usp=sharing"
   puts "Type \"begin\" to start the game."
   puts "Type \"tutorial\" to see a tutorial on how to play."
   def ask()
@@ -319,11 +321,35 @@ def endGame()
     ws[2,8] = ws[2,7]
     ws.save
   end
+  row1 = [ws[2,1],ws[2,2],ws[2,3]]
+  row2 = [ws[3,1],ws[3,2],ws[3,3]]
+  row3 = [ws[4,1],ws[4,2],ws[4,3]]
+  row11 = row1[1]
+  row12 = row1[2]
+  row13 = row1[3]
+  row21 = row2[1]
+  row22 = row2[2]
+  row23 = row2[3]
+  row31 = row2[1]
+  row32 = row2[2]
+  row33 = row2[3]
+  recap = "#{row11},#{row12},#{row13},#{row21},#{row22},#{row23},#{row31},#{row32},#{row33}"
+  puts recap
   time = Time.new
   timeHRS = "#{time.hour}:#{time.min}"
   timeDATE = "#{time.strftime("%A")}, #{time.strftime("%B")} #{time.strftime("%d")}, #{time.strftime("%Y")}"
   ws[2,4] = timeDATE
   ws[2,5] = timeHRS
   ws.save
+  [1,2,3].each do |i|
+    [2,3,4].each do |j|
+      ws[j,i] = nil
+    end
+  end
+  [4,5,6,7,8,9].each do |i|
+    ws[2,i] = nil
+  end
+  ws.save
 end
+
 init()
