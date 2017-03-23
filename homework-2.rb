@@ -250,7 +250,7 @@ def startGame()
       input = input.to_i
       if input <= 9
         if input >= 1
-          input
+          return input
         else
           puts "Input a number from 1-9, please."
           turn(n)
@@ -298,8 +298,7 @@ def init()
       puts "Input Player 2's username:"
       ws[2,7] = gets.chomp
       ws.save
-      puts "Starting game!"
-      puts ""
+      puts "Starting game!\n"
       startGame()
     elsif input == "tutorial"
       tutorial()
