@@ -14,125 +14,136 @@ def checkForWin(xy)
   column1 = [ws[2,1],ws[3,1],ws[4,1]]
   column2 = [ws[2,2],ws[3,2],ws[4,2]]
   column3 = [ws[2,3],ws[3,3],ws[4,3]]
-  if xy == "x"
-    $found = false
-    if row1[0] == "X"
-      if row1[1] == "X"
-        if row1[2] == "X"
-          $found = true
-        end
-      end
+  all = [ws[2,1],ws[2,2],ws[2,3],ws[3,1],ws[3,2],ws[3,3],ws[4,1],ws[4,2],ws[4,3]]
+  tie = "tie"
+  [1,2,3,4,5,6,7,8,9].each do |i|
+    if all[i] == ""
+      tie = "not"
     end
-    if row2[0] == "X"
-      if row2[1] == "X"
-        if row2[2] == "X"
-          $found = true
-        end
-      end
-    end
-    if row3[0] == "X"
-      if row3[1] == "X"
-        if row3[2] == "X"
-          $found = true
-        end
-      end
-    end
-    if column1[0] == "X"
-      if column1[1] == "X"
-        if column1[2] == "X"
-          $found = true
-        end
-      end
-    end
-    if column2[0] == "X"
-      if column2[1] == "X"
-        if column2[2] == "X"
-          $found = true
-        end
-      end
-    end
-    if column3[0] == "X"
-      if column3[1] == "X"
-        if column3[2] == "X"
-          $found = true
-        end
-      end
-    end
-    if row1[0] == "X"
-      if row2[1] == "X"
-        if row3[2] == "X"
-          $found = true
-        end
-      end
-    end
-    if row1[2] == "X"
-      if row2[1] == "X"
-        if row3[0] == "X"
-          $found = true
-        end
-      end
-    end
-    return $found
   end
-  if xy == "y"
-    $found = false
-    if row1[0] == "Y"
-      if row1[1] == "Y"
-        if row1[2] == "Y"
-          $found = true
+  if tie == false
+    if xy == "x"
+      $found = false
+      if row1[0] == "X"
+        if row1[1] == "X"
+          if row1[2] == "X"
+            $found = true
+          end
         end
       end
-    end
-    if row2[0] == "Y"
-      if row2[1] == "Y"
-        if row2[2] == "Y"
-          $found = true
+      if row2[0] == "X"
+        if row2[1] == "X"
+          if row2[2] == "X"
+            $found = true
+          end
         end
       end
-    end
-    if row3[0] == "Y"
-      if row3[1] == "Y"
-        if row3[2] == "Y"
-          $found = true
+      if row3[0] == "X"
+        if row3[1] == "X"
+          if row3[2] == "X"
+            $found = true
+          end
         end
       end
-    end
-    if column1[0] == "Y"
-      if column1[1] == "Y"
-        if column1[2] == "Y"
-          $found = true
+      if column1[0] == "X"
+        if column1[1] == "X"
+          if column1[2] == "X"
+            $found = true
+          end
         end
       end
-    end
-    if column2[0] == "Y"
-      if column2[1] == "Y"
-        if column2[2] == "Y"
-          $found = true
+      if column2[0] == "X"
+        if column2[1] == "X"
+          if column2[2] == "X"
+            $found = true
+          end
         end
       end
-    end
-    if column3[0] == "Y"
-      if column3[1] == "Y"
-        if column3[2] == "Y"
-          $found = true
+      if column3[0] == "X"
+        if column3[1] == "X"
+          if column3[2] == "X"
+            $found = true
+          end
         end
       end
-    end
-    if row1[0] == "Y"
-      if row2[1] == "Y"
-        if row3[2] == "Y"
-          $found = true
+      if row1[0] == "X"
+        if row2[1] == "X"
+          if row3[2] == "X"
+            $found = true
+          end
         end
       end
-    end
-    if row1[2] == "Y"
-      if row2[1] == "Y"
-        if row3[0] == "Y"
-          $found = true
+      if row1[2] == "X"
+        if row2[1] == "X"
+          if row3[0] == "X"
+            $found = true
+          end
         end
       end
+      return $found
     end
-    return $found
+    if xy == "y"
+      $found = false
+      if row1[0] == "Y"
+        if row1[1] == "Y"
+          if row1[2] == "Y"
+            $found = true
+          end
+        end
+      end
+      if row2[0] == "Y"
+        if row2[1] == "Y"
+          if row2[2] == "Y"
+            $found = true
+          end
+        end
+      end
+      if row3[0] == "Y"
+        if row3[1] == "Y"
+          if row3[2] == "Y"
+            $found = true
+          end
+        end
+      end
+      if column1[0] == "Y"
+        if column1[1] == "Y"
+          if column1[2] == "Y"
+            $found = true
+          end
+        end
+      end
+      if column2[0] == "Y"
+        if column2[1] == "Y"
+          if column2[2] == "Y"
+            $found = true
+          end
+        end
+      end
+      if column3[0] == "Y"
+        if column3[1] == "Y"
+          if column3[2] == "Y"
+            $found = true
+          end
+        end
+      end
+      if row1[0] == "Y"
+        if row2[1] == "Y"
+          if row3[2] == "Y"
+            $found = true
+          end
+        end
+      end
+      if row1[2] == "Y"
+        if row2[1] == "Y"
+          if row3[0] == "Y"
+            $found = true
+          end
+        end
+      end
+      return $found
+    end
+  else
+    return tie
   end
 end
 def checkForWin2()
@@ -143,6 +154,10 @@ def checkForWin2()
   elsif checkForWin("y") == true
     puts "\nPlayer 2 wins!"
     $winner = 2
+    endGame()
+  elsif checkForWin("x") == "tie"
+    puts "\nIt's a tie!"
+    $winner = "tie"
     endGame()
   else
     turn($turnNum)
@@ -287,6 +302,7 @@ def init()
   puts "https://docs.google.com/spreadsheets/d/13zeA2CQagu4xLwTuFrBoQSozv5jOY16xifq2EDHNf3s/edit?usp=sharing"
   puts "Type \"begin\" to start the game."
   puts "Type \"tutorial\" to see a tutorial on how to play."
+  puts "Type \"exit\" to stop the game."
   def ask()
     input = gets.chomp
     if input == "begin"
@@ -303,6 +319,8 @@ def init()
     elsif input == "tutorial"
       tutorial()
       init()
+    elsif input == "exit"
+      puts "Closing game..."
     else
       puts "Sorry, I didn't get that."
       ask()
@@ -318,6 +336,9 @@ def endGame()
     ws.save
   elsif $winner == 2
     ws[2,8] = ws[2,7]
+    ws.save
+  elsif $winner == "tie"
+    ws[2,8] = "TIE"
     ws.save
   end
   row11 = ws[2,1]
@@ -346,7 +367,7 @@ def endGame()
     ws[2,i] = nil
   end
   ws.save
-
+  clearSheet()
 end
 def clearSheet()
   session = GoogleDrive::Session.from_config("homework-2_config.json")
