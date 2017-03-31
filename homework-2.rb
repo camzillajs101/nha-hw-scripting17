@@ -7,7 +7,6 @@ require 'dotenv'
 Dotenv.load
 
 session = GoogleDrive::session.from_config("config.json")
-puts GoogleDrive::session
 ws = session.spreadsheet_by_key(ENV['SHEET_KEY']).worksheets[0]
 
 $winner = nil
@@ -20,7 +19,7 @@ def checkForWin(xy)
   column3 = [$ws[2,3],$ws[3,3],$ws[4,3]]
   all = [$ws[2,1],$ws[2,2],$ws[2,3],$ws[3,1],$ws[3,2],$ws[3,3],$ws[4,1],$ws[4,2],$ws[4,3]]
   tie = "tie"
-  [1,2,3,4,5,6,7,8,9].each do |i|
+  [1..9].each do |i|
     if all[i] == ""
       tie = "not"
     end
@@ -356,24 +355,24 @@ def endGame()
   $ws[2,4] = timeDATE
   $ws[2,5] = timeHRS
   $ws.save
-  [1,2,3].each do |i|
-    [2,3,4].each do |j|
+  [1..3].each do |i|
+    [2..4].each do |j|
       $ws[j,i] = nil
     end
   end
-  [4,5,6,7,8,9].each do |i|
+  [4..9].each do |i|
     $ws[2,i] = nil
   end
   $ws.save
   clearSheet()
 end
 def clearSheet()
-  [1,2,3].each do |i|
-    [2,3,4].each do |j|
+  [1..3].each do |i|
+    [2..4].each do |j|
       $ws[j,i] = nil
     end
   end
-  [4,5,6,7,8,9].each do |i|
+  [4..9].each do |i|
     $ws[2,i] = nil
   end
   $ws.save
