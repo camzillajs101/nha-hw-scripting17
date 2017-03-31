@@ -3,10 +3,12 @@
 =end
 
 require 'google_drive'
+require 'dotenv'
+Dotenv.load
 
-session = GoogleDrive::session.from_config("homework-2_config.json")
+session = GoogleDrive::session.from_config("config.json")
 puts GoogleDrive::session
-ws = session.spreadsheet_by_key("13zeA2CQagu4xLwTuFrBoQSozv5jOY16xifq2EDHNf3s").worksheets[0]
+ws = session.spreadsheet_by_key(ENV['SHEET_KEY']).worksheets[0]
 
 $winner = nil
 def checkForWin(xy)
