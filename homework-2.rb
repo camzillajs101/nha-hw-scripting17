@@ -4,17 +4,19 @@
 
 require 'google_drive'
 
+session = GoogleDrive::session.from_config("homework-2_config.json")
+puts GoogleDrive::session
+ws = session.spreadsheet_by_key("13zeA2CQagu4xLwTuFrBoQSozv5jOY16xifq2EDHNf3s").worksheets[0]
+
 $winner = nil
 def checkForWin(xy)
-  session = GoogleDrive::Session.from_config("homework-2_config.json")
-  ws = session.spreadsheet_by_key("13zeA2CQagu4xLwTuFrBoQSozv5jOY16xifq2EDHNf3s").worksheets[0]
-  row1 = [ws[2,1],ws[2,2],ws[2,3]]
-  row2 = [ws[3,1],ws[3,2],ws[3,3]]
-  row3 = [ws[4,1],ws[4,2],ws[4,3]]
-  column1 = [ws[2,1],ws[3,1],ws[4,1]]
-  column2 = [ws[2,2],ws[3,2],ws[4,2]]
-  column3 = [ws[2,3],ws[3,3],ws[4,3]]
-  all = [ws[2,1],ws[2,2],ws[2,3],ws[3,1],ws[3,2],ws[3,3],ws[4,1],ws[4,2],ws[4,3]]
+  row1 = [$ws[2,1],$ws[2,2],$ws[2,3]]
+  row2 = [$ws[3,1],$ws[3,2],$ws[3,3]]
+  row3 = [$ws[4,1],$ws[4,2],$ws[4,3]]
+  column1 = [$ws[2,1],$ws[3,1],$ws[4,1]]
+  column2 = [$ws[2,2],$ws[3,2],$ws[4,2]]
+  column3 = [$ws[2,3],$ws[3,3],$ws[4,3]]
+  all = [$ws[2,1],$ws[2,2],$ws[2,3],$ws[3,1],$ws[3,2],$ws[3,3],$ws[4,1],$ws[4,2],$ws[4,3]]
   tie = "tie"
   [1,2,3,4,5,6,7,8,9].each do |i|
     if all[i] == ""
@@ -278,14 +280,12 @@ def startGame()
       puts "Input a number, please."
       turn(n)
     end
-    session = GoogleDrive::Session.from_config("homework-2_config.json")
-    ws = session.spreadsheet_by_key("13zeA2CQagu4xLwTuFrBoQSozv5jOY16xifq2EDHNf3s").worksheets[0]
     if $turnNum == 1
-      ws[formatNum1(input),formatNum2(input)] = "X"
-      ws.save
+      $ws[formatNum1(input),formatNum2(input)] = "X"
+      $ws.save
     elsif $turnNum == 2
-      ws[formatNum1(input),formatNum2(input)] = "Y"
-      ws.save
+      $ws[formatNum1(input),formatNum2(input)] = "Y"
+      $ws.save
     end
     if $turnNum == 1
       $turnNum = 2
@@ -307,13 +307,11 @@ def init()
     input = gets.chomp
     if input == "begin"
       puts "Input Player 1's username:"
-      session = GoogleDrive::Session.from_config("homework-2_config.json")
-      ws = session.spreadsheet_by_key("13zeA2CQagu4xLwTuFrBoQSozv5jOY16xifq2EDHNf3s").worksheets[0]
-      ws[2,6] = gets.chomp
-      ws.save
+      $ws[2,6] = gets.chomp
+      $ws.save
       puts "Input Player 2's username:"
-      ws[2,7] = gets.chomp
-      ws.save
+      $ws[2,7] = gets.chomp
+      $ws.save
       puts "Starting game!\n"
       startGame()
     elsif input == "tutorial"
@@ -329,58 +327,54 @@ def init()
   ask()
 end
 def endGame()
-  session = GoogleDrive::Session.from_config("homework-2_config.json")
-  ws = session.spreadsheet_by_key("13zeA2CQagu4xLwTuFrBoQSozv5jOY16xifq2EDHNf3s").worksheets[0]
   if $winner == 1
-    ws[2,8] = ws[2,6]
-    ws.save
+    $ws[2,8] = $ws[2,6]
+    $ws.save
   elsif $winner == 2
-    ws[2,8] = ws[2,7]
-    ws.save
+    $ws[2,8] = $ws[2,7]
+    $ws.save
   elsif $winner == "tie"
-    ws[2,8] = "TIE"
-    ws.save
+    $ws[2,8] = "TIE"
+    $ws.save
   end
-  row11 = ws[2,1]
-  row12 = ws[2,2]
-  row13 = ws[2,3]
-  row21 = ws[3,1]
-  row22 = ws[3,2]
-  row23 = ws[3,3]
-  row31 = ws[4,1]
-  row32 = ws[4,2]
-  row33 = ws[4,3]
+  row11 = $ws[2,1]
+  row12 = $ws[2,2]
+  row13 = $ws[2,3]
+  row21 = $ws[3,1]
+  row22 = $ws[3,2]
+  row23 = $ws[3,3]
+  row31 = $ws[4,1]
+  row32 = $ws[4,2]
+  row33 = $ws[4,3]
   recap = "#{row11},#{row12},#{row13},#{row21},#{row22},#{row23},#{row31},#{row32},#{row33}"
-  ws[2,9] = recap
+  $ws[2,9] = recap
   time = Time.new
   timeHRS = "#{time.hour}:#{time.min}"
   timeDATE = "#{time.strftime("%A")}, #{time.strftime("%B")} #{time.strftime("%d")}, #{time.strftime("%Y")}"
-  ws[2,4] = timeDATE
-  ws[2,5] = timeHRS
-  ws.save
+  $ws[2,4] = timeDATE
+  $ws[2,5] = timeHRS
+  $ws.save
   [1,2,3].each do |i|
     [2,3,4].each do |j|
-      ws[j,i] = nil
+      $ws[j,i] = nil
     end
   end
   [4,5,6,7,8,9].each do |i|
-    ws[2,i] = nil
+    $ws[2,i] = nil
   end
-  ws.save
+  $ws.save
   clearSheet()
 end
 def clearSheet()
-  session = GoogleDrive::Session.from_config("homework-2_config.json")
-  ws = session.spreadsheet_by_key("13zeA2CQagu4xLwTuFrBoQSozv5jOY16xifq2EDHNf3s").worksheets[0]
   [1,2,3].each do |i|
     [2,3,4].each do |j|
-      ws[j,i] = nil
+      $ws[j,i] = nil
     end
   end
   [4,5,6,7,8,9].each do |i|
-    ws[2,i] = nil
+    $ws[2,i] = nil
   end
-  ws.save
+  $ws.save
 end
 
 init()
