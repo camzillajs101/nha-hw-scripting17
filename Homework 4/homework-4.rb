@@ -1,4 +1,5 @@
 require 'nokogiri'
+require 'json'
 
 puts "What do you want to search for?"
 search = gets.chomp
