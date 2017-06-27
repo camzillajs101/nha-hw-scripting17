@@ -1,4 +1,5 @@
 require 'nokogiri'
+require 'sinatra'
 
 url = "https://www.twitter.com"
 doc = Nokogiri::HTML(open(url))
