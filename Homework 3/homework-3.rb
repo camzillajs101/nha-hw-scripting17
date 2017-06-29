@@ -8,5 +8,7 @@ iterations = 0
 url = "https://www.twitter.com"
 doc = Nokogiri::HTML(open(url))
 doc.css("span.username.u-dir b").each do |x|
-  puts x.content
+  hash["item#{iterations + 1}"] = x.content
+  iterations = iterations + 1
+end
 end
