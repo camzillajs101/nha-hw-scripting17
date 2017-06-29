@@ -10,7 +10,9 @@ doc.css("span.username.u-dir b").each do |x|
   array << x.content
 end
 
+new_ary = array.reject { |c| c.empty? }
+
 get '/' do
   content_type :json
-  { :usernames => array }.to_json
+  { :usernames => new_ary }.to_json
 end
